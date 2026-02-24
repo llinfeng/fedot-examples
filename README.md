@@ -22,3 +22,28 @@ Notebooks correspond to certain versions of the framework:
 
 All supplementary materials for guides are placed in folders "data" (csv files for examples)
 and "jupyter_media" (plots and animations).
+
+## Running the notebooks with `uv`
+
+1) Create a virtual environment:
+```
+uv python install 3.11                       # ensure uv has 3.11 available
+uv venv .venv --python 3.11                  # recreate the venv on 3.11
+```
+2) Activate it:
+```
+source .venv/bin/activate
+```
+3) Install Jupyter plus the FEDOT version that matches the notebook folder you plan to open. Examples:
+```
+uv pip install "fedot==0.7.5" jupyter ipykernel   # for notebooks/latest
+uv pip install "fedot[extra]"
+
+uv pip install "fedot==0.6.2" jupyter ipykernel   # for notebooks/version_06_2
+```
+4) Launch Jupyter (no browser auto-open):
+```
+uv run jupyter notebook --no-browser --port=6000
+```
+
+If your default uv cache path is not writable, prepend the commands with `UV_CACHE_DIR=.uv-cache` to keep the cache local. FEDOT versions per folder are listed above—pick the corresponding constraint when installing so the examples run as intended.
