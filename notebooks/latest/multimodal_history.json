@@ -1,0 +1,322 @@
+{
+    "_default_save_dir": "/tmp/FEDOT",
+    "_generations": [],
+    "_objective": {
+        "is_multi_objective": true,
+        "metric_names": [
+            "roc_auc",
+            "f1"
+        ],
+        "_class_path": "golem.core.optimisers.objective.objective/ObjectiveInfo"
+    },
+    "_tuning_result": {
+        "operator": {
+            "_nodes": [
+                {
+                    "_nodes_from": [
+                        "ab44f53f-7519-4389-b53d-1ae99ee74988",
+                        "26c6e575-9633-4120-ae84-0babe1b858da"
+                    ],
+                    "content": {
+                        "name": "rf",
+                        "params": {
+                            "n_jobs": 16
+                        },
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "f72b776a-17a5-4831-b577-4115630f7e09",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "49733d72-8758-4fa7-b148-36d2555349ff",
+                        "712dbfe0-4275-45b0-93ed-16d88ad1f3b2",
+                        "23f0bc38-2e58-443b-9d9a-1a8c766fb37a"
+                    ],
+                    "content": {
+                        "name": "logit",
+                        "params": {},
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "ab44f53f-7519-4389-b53d-1ae99ee74988",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "959c902f-6eae-4e46-8f39-98c6104f6432"
+                    ],
+                    "content": {
+                        "name": "catboost",
+                        "params": {
+                            "n_jobs": 16,
+                            "num_trees": 3000,
+                            "learning_rate": 0.03,
+                            "l2_leaf_reg": 0.01,
+                            "bootstrap_type": "Bernoulli",
+                            "grow_policy": "SymmetricTree",
+                            "max_depth": 5,
+                            "min_data_in_leaf": 1,
+                            "one_hot_max_size": 10,
+                            "fold_permutation_block": 1,
+                            "boosting_type": "Plain",
+                            "od_type": "Iter",
+                            "od_wait": 100,
+                            "max_bin": 32,
+                            "feature_border_type": "GreedyLogSum",
+                            "nan_mode": "Min",
+                            "verbose": false,
+                            "allow_writing_files": false,
+                            "use_eval_set": true,
+                            "use_best_model": true,
+                            "enable_categorical": true
+                        },
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "49733d72-8758-4fa7-b148-36d2555349ff",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "8c1aafb8-aaf6-4e24-b727-e259ce9e9e9b"
+                    ],
+                    "content": {
+                        "name": "scaling",
+                        "params": {},
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "959c902f-6eae-4e46-8f39-98c6104f6432",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "fae925d1-d6c1-46d4-b205-fbd5a0864eff"
+                    ],
+                    "content": {
+                        "name": "tfidf",
+                        "params": {
+                            "min_df": 0.1,
+                            "max_df": 0.9
+                        },
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "8c1aafb8-aaf6-4e24-b727-e259ce9e9e9b",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [],
+                    "content": {
+                        "name": "data_source_text/description",
+                        "params": {},
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "fae925d1-d6c1-46d4-b205-fbd5a0864eff",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "959c902f-6eae-4e46-8f39-98c6104f6432"
+                    ],
+                    "content": {
+                        "name": "xgboost",
+                        "params": {
+                            "n_jobs": 16,
+                            "verbosity": 0,
+                            "booster": "gbtree",
+                            "tree_method": "auto",
+                            "enable_categorical": true,
+                            "use_eval_set": true,
+                            "early_stopping_rounds": 30
+                        },
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "712dbfe0-4275-45b0-93ed-16d88ad1f3b2",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "959c902f-6eae-4e46-8f39-98c6104f6432"
+                    ],
+                    "content": {
+                        "name": "lgbm",
+                        "params": {
+                            "boosting_type": "gbdt",
+                            "max_depth": -1,
+                            "bagging_fraction": 0.85,
+                            "extra_trees": false,
+                            "enable_categorical": true,
+                            "use_eval_set": true,
+                            "early_stopping_rounds": 30,
+                            "n_jobs": 16,
+                            "verbose": -1
+                        },
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "23f0bc38-2e58-443b-9d9a-1a8c766fb37a",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "694b3d5d-4ca2-4b9f-82ad-fab95070d189",
+                        "1a1d2c0f-8290-4d16-9d4f-4253a9604fc4",
+                        "5278708a-c568-4bf1-ac93-ce9cb40d421c"
+                    ],
+                    "content": {
+                        "name": "logit",
+                        "params": {},
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "26c6e575-9633-4120-ae84-0babe1b858da",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "2c8c4d69-8383-4141-99c4-a5dbc45a583e"
+                    ],
+                    "content": {
+                        "name": "catboost",
+                        "params": {
+                            "n_jobs": 16,
+                            "num_trees": 3000,
+                            "learning_rate": 0.03,
+                            "l2_leaf_reg": 0.01,
+                            "bootstrap_type": "Bernoulli",
+                            "grow_policy": "SymmetricTree",
+                            "max_depth": 5,
+                            "min_data_in_leaf": 1,
+                            "one_hot_max_size": 10,
+                            "fold_permutation_block": 1,
+                            "boosting_type": "Plain",
+                            "od_type": "Iter",
+                            "od_wait": 100,
+                            "max_bin": 32,
+                            "feature_border_type": "GreedyLogSum",
+                            "nan_mode": "Min",
+                            "verbose": false,
+                            "allow_writing_files": false,
+                            "use_eval_set": true,
+                            "use_best_model": true,
+                            "enable_categorical": true
+                        },
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "694b3d5d-4ca2-4b9f-82ad-fab95070d189",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "c4361d75-6792-4958-ac06-304b2ccca840"
+                    ],
+                    "content": {
+                        "name": "scaling",
+                        "params": {},
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "2c8c4d69-8383-4141-99c4-a5dbc45a583e",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [],
+                    "content": {
+                        "name": "data_source_table",
+                        "params": {},
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "c4361d75-6792-4958-ac06-304b2ccca840",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "2c8c4d69-8383-4141-99c4-a5dbc45a583e"
+                    ],
+                    "content": {
+                        "name": "xgboost",
+                        "params": {
+                            "n_jobs": 16,
+                            "verbosity": 0,
+                            "booster": "gbtree",
+                            "tree_method": "auto",
+                            "enable_categorical": true,
+                            "use_eval_set": true,
+                            "early_stopping_rounds": 30
+                        },
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "1a1d2c0f-8290-4d16-9d4f-4253a9604fc4",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                },
+                {
+                    "_nodes_from": [
+                        "2c8c4d69-8383-4141-99c4-a5dbc45a583e"
+                    ],
+                    "content": {
+                        "name": "lgbm",
+                        "params": {
+                            "boosting_type": "gbdt",
+                            "max_depth": -1,
+                            "bagging_fraction": 0.85,
+                            "extra_trees": false,
+                            "enable_categorical": true,
+                            "use_eval_set": true,
+                            "early_stopping_rounds": 30,
+                            "n_jobs": 16,
+                            "verbose": -1
+                        },
+                        "metadata": {
+                            "metric": null,
+                            "_class_path": "fedot.core.pipelines.node/NodeMetadata"
+                        }
+                    },
+                    "uid": "5278708a-c568-4bf1-ac93-ce9cb40d421c",
+                    "_class_path": "golem.core.dag.linked_graph_node/LinkedGraphNode"
+                }
+            ],
+            "_postprocess_nodes": {
+                "_class_path": "golem.core.dag.linked_graph/LinkedGraph._empty_postprocess"
+            },
+            "_class_path": "golem.core.dag.linked_graph/LinkedGraph"
+        },
+        "_class_path": "golem.core.dag.graph_delegate/GraphDelegate"
+    },
+    "archive_history": [],
+    "individuals_pool": [],
+    "_class_path": "golem.core.optimisers.opt_history_objects.opt_history/OptHistory"
+}
